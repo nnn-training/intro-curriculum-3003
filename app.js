@@ -35,7 +35,7 @@ rl.on('close', () => {
     return pair1[1].change - pair2[1].change;
   });
   const rankingStrings = rankingArray.map(([key, value],i) => {
-    return '第' + i + '位 「' + key + ': ' + value.popu10 + '=>' + value.popu15 + ' 変化率:' + value.change + ' 」';
+    return '第' + (i+1) + '位 「' + key + ': ' + value.popu10 + '=>' + value.popu15 + ' 変化率:' + value.change + ' 」';
   });
   console.log('2010 年から 2015 年にかけて 15〜19 歳の人が減った割合の都道府県ランキング')
   console.log(rankingStrings);
