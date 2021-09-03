@@ -32,10 +32,10 @@ rl.on('close', () => {
     value.change = value.popu15 / value.popu10;
   }
   const rankingArray = Array.from(prefectureDataMap).sort((pair1, pair2) => {
-    return pair2[1].change - pair1[1].change;
+    return pair1[1].change - pair2[1].change; // 2010 年から 2015 年にかけて 15〜19 歳の人が減った割合の都道府県ランキングのため、昇順ソート
   });
-  const rankingStrings = rankingArray.map(([key, value]) => {
-    return key + ': ' + value.popu10 + '=>' + value.popu15 + ' 変化率:' + value.change;
+  const rankingStrings = rankingArray.map(([key, value],i) => {
+    return (i + 1).toString() + ". " + key + ': ' + value.popu10 + '=>' + value.popu15 + ' 変化率:' + value.change;
   });
   console.log(rankingStrings);
 });
