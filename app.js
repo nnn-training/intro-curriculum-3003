@@ -36,7 +36,7 @@ rl.on('close', () => {
   }
   //Array.from()で配列のようなもの(Map)から配列に変換し（全てのデータが大きな一つの配列となり、その中に都道府県をkeyとした小さな配列がたくさん入っている）、ループの一つ一つがsortメソッドの引数に入って、人口変化率が高いものが先にくるようにsortされて、その結果をrankingArrayに代入
   const rankingArray = Array.from(prefectureDataMap).sort((pair1, pair2) => {
-    return pair2[1].change + pair1[1].change;
+    return pair1[1].change　-　pair2[1].change;
   });
   //配列のkeyとvalueを受け取ってmap関数で見やすく書き換えて変数に代入
   const rankingStrings = rankingArray.map(([key, value], i) => {
