@@ -28,7 +28,7 @@ rl.on('line', (lineString) => {
   }
 });
 rl.on('close', () => {
-  for (let [key, value] of prefectureDataMap) { 
+  for (const [key, value] of prefectureDataMap) {
     value.change = value.popu15 / value.popu10;
   }
   const rankingArray = Array.from(prefectureDataMap).sort((pair1, pair2) => {
