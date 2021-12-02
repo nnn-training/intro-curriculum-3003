@@ -32,10 +32,14 @@ rl.on('close', () => {
     value.change = value.popu15 / value.popu10;
   }
   const rankingArray = Array.from(prefectureDataMap).sort((pair1, pair2) => {
-    return pair2[1].change - pair1[1].change;
+    return pair1[1].change - pair2[1].change; // 人口が減ったランキングに改変
   });
-  const rankingStrings = rankingArray.map(([key, value]) => {
-    return key + ': ' + value.popu10 + '=>' + value.popu15 + ' 変化率:' + value.change;
+  /* 人口が減ったランキングの順位も表示させる
+    →map 関数は第1引数に配列の要素、第2引数に配列の添字を渡す仕様になっているので、
+     第2引数にrank を渡すことでrank = 添字 として表記できる(添字なので0始まり) */
+  const rankingStrings = rankingArray.map(([key, value], rank) => {
+    // return key + ': ' + value.popu10 + '=>' + value.popu15 + ' 変化率:' + value.change;
+    return `【第${rank+1}位】 ${key}: ${value.popu10} => ${value.popu15} 変化率: ${value.change}`;
   });
   console.log(rankingStrings);
 });
