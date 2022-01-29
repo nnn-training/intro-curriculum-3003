@@ -10,8 +10,10 @@ rl.on('line', (lineString) => {
   const prefecture = columns[1];
   const popu = parseInt(columns[3]);
   if (year === 2010 || year === 2015) {
-    let value = prefectureDataMap.get(prefecture);
-    if (!value) {
+    let value = null;
+    if (prefectureDataMap.has(prefecture)) {
+      value = prefectureDataMap.get(prefecture);  
+    } else {
       value = {
         popu10: 0,
         popu15: 0,
