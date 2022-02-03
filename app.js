@@ -4,6 +4,7 @@ const readline = require('readline');
 const rs = fs.createReadStream('./popu-pref.csv');
 const rl = readline.createInterface({ 'input': rs, 'output': {} });
 const prefectureDataMap = new Map(); // key: 都道府県 value: 集計データのオブジェクト
+
 rl.on('line', (lineString) => {
   const columns = lineString.split(',');
   const year = parseInt(columns[0]);
@@ -32,10 +33,10 @@ rl.on('close', () => {
     value.change = value.popu15 / value.popu10;
   }
   const rankingArray = Array.from(prefectureDataMap).sort((pair1, pair2) => {
-    return pair2[1].change - pair1[1].change;
+    return pair1[1].change - pair2[1].change;
   });
-  const rankingStrings = rankingArray.map(([key, value]) => {
-    return key + ': ' + value.popu10 + '=>' + value.popu15 + ' 変化率:' + value.change;
+  const rankingStrings = rankingArray.map(([key, value], i) => {
+    return ++i + key + ': ' + value.popu10 + '=>' + value.popu15 + ' 変化率:' + value.change;
   });
   console.log(rankingStrings);
 });
