@@ -32,10 +32,10 @@ rl.on('close', () => {
     value.change = value.popu15 / value.popu10;
   }
   const rankingArray = Array.from(prefectureDataMap).sort((pair1, pair2) => {
-    return pair2[1].change - pair1[1].change;
+    return pair1[1].change - pair2[1].change;
   });
-  const rankingStrings = rankingArray.map(([key, value]) => {
-    return key + ': ' + value.popu10 + '=>' + value.popu15 + ' 変化率:' + value.change;
+  const rankingStrings = rankingArray.map(([key, value],i) => {
+    return `15〜19歳人口減少率第${i+1}位は${key}です。2010年の${value.popu10}人から2015年の${value.popu15}人になりました。変化率は${value.change}です。`;
   });
   console.log(rankingStrings);
 });
