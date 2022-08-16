@@ -15,7 +15,7 @@ rl.on('line', (lineString) => {
       value = {
         popu10: 0,
         popu15: 0,
-        change: null,
+        change: null
       };
     }
     if (year === 2010) {
@@ -28,7 +28,6 @@ rl.on('line', (lineString) => {
   }
 });
 rl.on('close', () => {
-  let cnt = 1;
   for (const [key, value] of prefectureDataMap) {
     value.change = value.popu15 / value.popu10;
   }
