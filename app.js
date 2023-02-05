@@ -35,10 +35,12 @@ rl.on('close', () => {
     return pair1[1].change - pair2[1].change;
   });
   const rankingStrings = rankingArray.map(([key, value], i) => {
-    const [popu10, popu15] = [value.popu10.toString(), value.popu15.toString()];
-    return `${(i + 1).toString().padStart(2, '0')}位` +
+    const [popu10, popu15, rank] = [value.popu10.toString(), value.popu15.toString(), (i + 1).toString()];
+
+    return `${rank.padStart(2, '0')}位` +
       ` ${key.padStart(4, '\u3000')}:${popu10.padStart(6)}=>${popu15.padStart(6)}` +
       ` 変化率:${value.change}`;
   });
+
   console.log(rankingStrings);
 });
