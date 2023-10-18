@@ -38,5 +38,6 @@ rl.on('close', () => {
   });
   const rankingStrings = rankingArray.map(([key, value], i) => {
     return `${i + 1}位 ${key}: ${value.after}=>${value.before} 変化率: ${value.change}`;
+  });
   console.log(rankingStrings);
 });
