@@ -1,5 +1,5 @@
 'use strict';
-const fs = require('fs');
+const fs = require('node:fs');
 const readline = require('readline');
 const rs = fs.createReadStream('./popu-pref.csv');
 const rl = readline.createInterface({ input: rs, output: {} });
@@ -9,36 +9,36 @@ rl.on('line', lineString => {
   const year = parseInt(columns[0]);
   const prefecture = columns[1];
   const popu = parseInt(columns[3]);
-  if (year === 2010 || year === 2015) {
+  if (year === 2016 || year === 2021) {
     let value = prefectureDataMap.get(prefecture);
     if (!value) {
       value = {
-        popu10: 0,
-        popu15: 0,
+        before: 0,
+        after: 0,
         change: null,
       };
     }
-    if (year === 2010) {
-      value.popu10 = popu;
+    if (year === 2016) {
+      value.before = popu;
     }
-    if (year === 2015) {
-      value.popu15 = popu;
+    if (year === 2021) {
+      value.after = popu;
     }
     prefectureDataMap.set(prefecture, value);
   }
 });
 rl.on('close', () => {
   for (const [key, value] of prefectureDataMap) {
-    value.change = value.popu15 / value.popu10;
+    value.change = value.after / value.before;
   }
   const rankingArray = Array.from(prefectureDataMap).sort((pair1, pair2) => {
     return pair1[1].change - pair2[1].change;
   });
   const rankingStrings = rankingArray.map(([key, value], i) => {
-    const [popu10, popu15, rank] = [value.popu10.toString(), value.popu15.toString(), (i + 1).toString()];
+    const [before, after, rank] = [value.before, value.after, (i + 1)];
 
-    return `${rank.padStart(2, '0')}位` +
-      ` ${key.padStart(4, '\u3000')}:${popu10.padStart(6)}=>${popu15.padStart(6)}` +
+    return `${rank.toString().padStart(2, '0')}位` +
+      ` ${key.padStart(4, '\u3000')}:${before.toString().padStart(6)}=>${after.toString().padStart(6)}` +
       ` 変化率:${value.change}`;
   });
 
