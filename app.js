@@ -10,14 +10,12 @@ rl.on('line', lineString => {
   const prefecture = columns[1];
   const popu = parseInt(columns[3]);
   if (year === 2016 || year === 2021) {
-    let value = null;
-    if (prefectureDataMap.has(prefecture)) {
-      value = prefectureDataMap.get(prefecture);
-    } else {
+    let value = prefectureDataMap.get(prefecture);
+    if (!value) {
       value = {
         before: 0,
         after: 0,
-        change: null
+        change: null,
       };
     }
     if (year === 2016) {
@@ -34,10 +32,15 @@ rl.on('close', () => {
     value.change = value.after / value.before;
   }
   const rankingArray = Array.from(prefectureDataMap).sort((pair1, pair2) => {
-    return pair2[1].change - pair1[1].change;
+    return pair1[1].change - pair2[1].change;
   });
-  const rankingStrings = rankingArray.map(([key, value]) => {
-    return `${key}: ${value.before}=>${value.after} 変化率: ${value.change}`;
+  const rankingStrings = rankingArray.map(([key, value], i) => {
+    const [before, after, rank] = [value.before, value.after, (i + 1)];
+
+    return `${rank.toString().padStart(2, '0')}位` +
+      ` ${key.padStart(4, '\u3000')}:${before.toString().padStart(6)}=>${after.toString().padStart(6)}` +
+      ` 変化率:${value.change}`;
   });
+
   console.log(rankingStrings);
 });
