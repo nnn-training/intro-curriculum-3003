@@ -29,6 +29,7 @@ rl.on('line', lineString => {
     prefectureDataMap.set(prefecture, value);
   }
 });
+
 rl.on('close', () => {
   for (const [key, value] of prefectureDataMap) {
     value.change = value.after / value.before;
